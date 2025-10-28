@@ -1,0 +1,83 @@
+# ---- Django ----
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.local
+.env.*.local
+
+# ---- Django Migrations ----
+# (optionnel : garde-les si tu veux les suivre dans Git)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+# */migrations/  # Décommente si tu ne veux PAS versionner les migrations
+
+# ---- Virtual Environment ----
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ---- VSCode / PyCharm ----
+.vscode/
+.idea/
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+
+# ---- Python ----
+*.py[cod]
+*$py.class
+__pycache__/
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ---- Unit test / coverage ----
+.coverage
+.tox/
+.nox/
+.cache/
+.pytest_cache/
+htmlcov/
+coverage.xml
+
+# ---- Static files collected by collectstatic ----
+static/
+
+# ---- Jupyter / notebooks ----
+.ipynb_checkpoints/
+
+# ---- Docker / containers ----
+docker-compose.override.yml
+.dockerignore
+
+# ---- MyPy / Lint ----
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+ruff_cache/
+
+# ---- Local settings ----
+local_settings.py
