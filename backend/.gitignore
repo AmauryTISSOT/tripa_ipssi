@@ -81,3 +81,5 @@ ruff_cache/
 
 # ---- Local settings ----
 local_settings.py
+/annuaire_service_public/__pycache__
+/annuaire_service_public/migrations/__pycache__
