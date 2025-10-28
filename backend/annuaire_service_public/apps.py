@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TripaIpssiConfig(AppConfig):
+class AnnuaireServicePublicConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'tripa_ipssi'
+    name = 'annuaire_service_public'
