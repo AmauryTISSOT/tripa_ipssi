@@ -26,7 +26,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Ma Boutique API",
+        title="annuaire_service_public_ipssi",
         default_version="v1",
         description="Documentation de l'API",
         terms_of_service="https://www.example.com/terms/",
