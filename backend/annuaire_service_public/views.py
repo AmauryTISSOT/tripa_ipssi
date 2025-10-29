@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework import status
-from .models import Service
+from .models import Service, Compilation
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import requests
 import urllib.parse
-from .serializers import ServiceSerializer
+from .serializers import CompilationSerializer
 
 from .service_public_parser import ServicePublicParser
 
@@ -166,3 +166,69 @@ def get_top_5_services(request):
         enriched_results.append(record)
 
     return Response(enriched_results, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def create_service_compilation(request, pk):
+    if Compilation.objects.filter(service_id=pk).exists():
+        return Response(
+            {"message": "Ce service public est déjà compilé."},
+            status=status.HTTP_200_OK,
+        )
+
+    compilation = Compilation.objects.create(service_id=pk)
+    serializer = CompilationSerializer(compilation)
+
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(["GET"])
+def get_service_compilation(request):
+    compilations = Compilation.objects.all().order_by("-created_at")
+
+    if not compilations:
+        return Response([], status=status.HTTP_200_OK)
+
+    ids = [f'"{s.service_id}"' for s in compilations]
+    ids_clause = ",".join(ids)
+    encoded_where = urllib.parse.quote(f"id IN ({ids_clause})")
+
+    url = f"{BASE_URL}?where={encoded_where}&limit=100"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        return Response(
+            {"error": "Impossible de récupérer les détails depuis Service Public"},
+            status=response.status_code,
+        )
+
+    api_data = response.json()
+
+    results = [
+        ServicePublicParser.parse_record(record)
+        for record in api_data.get("results", [])
+    ]
+
+    return Response(results, status=status.HTTP_200_OK)
+
+
+@api_view(["DELETE"])
+def delete_service_compilation(request, pk):
+    if not pk:
+        return Response(
+            {"error": "Le paramètre 'id' est requis."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    deleted, _ = Compilation.objects.filter(id=pk).delete()
+
+    if deleted == 0:
+        return Response(
+            {"message": "Aucune compilation trouvée pour cet id."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    return Response(
+        {"message": f"La compilation pour {pk} a été supprimée."},
+        status=status.HTTP_200_OK,
+    )
