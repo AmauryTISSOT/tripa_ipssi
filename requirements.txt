@@ -1,0 +1,9 @@
+# ---- Core Django ----
+Django==5.2.7
+
+# ---- API & HTTP ----
+requests==2.32.3
+
+
+# ---- Outils développeur ----
+python-dotenv==1.0.1
