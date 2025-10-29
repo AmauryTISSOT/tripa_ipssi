@@ -28,4 +28,19 @@ urlpatterns = [
         views.get_top_5_services,
         name="get_top_5_services",
     ),
+    path(
+        "compilation/<str:pk>/",
+        views.create_service_compilation,
+        name="create_service_compilation",
+    ),
+    path(
+        "compilation/",
+        views.get_service_compilation,
+        name="get_service_compilation",
+    ),
+    path(
+        "compilation/delete/<str:pk>",
+        views.delete_service_compilation,
+        name="delete_service_compilation",
+    ),
 ]
