@@ -10,12 +10,17 @@ urlpatterns = [
     ),
     path(
         "departements/<str:pk>/services-publics/professionnel/",
-        views.get_service_public_for_profesionnel_by_departement,
-        name="get_service_public_for_profesionnel_by_departement",
+        views.get_service_public_for_professionnel_by_departement,
+        name="get_service_public_for_professionnel_by_departement",
     ),
     path(
         "departements/<str:pk>/services-publics/association/",
         views.get_service_public_for_association_by_departement,
         name="get_service_public_for_association_by_departement",
+    ),
+    path(
+        "services_public/<str:pk>/",
+        views.get_service_public_details_by_id,
+        name="get_service_public_details_by_id",
     ),
 ]
