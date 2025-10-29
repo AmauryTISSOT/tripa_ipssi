@@ -19,8 +19,13 @@ urlpatterns = [
         name="get_service_public_for_association_by_departement",
     ),
     path(
-        "services_public/<str:pk>/",
+        "services-publics/<str:pk>/",
         views.get_service_public_details_by_id,
         name="get_service_public_details_by_id",
+    ),
+    path(
+        "services-publics/top",
+        views.get_top_5_services,
+        name="get_top_5_services",
     ),
 ]
