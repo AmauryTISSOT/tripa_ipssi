@@ -60,3 +60,22 @@ def get_service_public_for_profesionnel_by_departement(request, pk):
     ]
 
     return Response(results)
+
+
+@api_view(["GET"])
+def get_service_public_for_association_by_departement(request, pk):
+    url = f"{BASE_URL}?where=startswith(code_insee_commune,%22{pk}%22)%20AND%20(pivot%20LIKE%20%22prefecture%22%20OR%20pivot%20LIKE%20%22drajes%22)&limit=100"
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        return Response(
+            {"error": "Impossible de récupérer les services publics pour les citoyens"},
+            status=response.status_code,
+        )
+
+    data = response.json()
+    results = [
+        ServicePublicParser.parse_record(record) for record in data.get("results", [])
+    ]
+
+    return Response(results)

@@ -13,4 +13,9 @@ urlpatterns = [
         views.get_service_public_for_profesionnel_by_departement,
         name="get_service_public_for_profesionnel_by_departement",
     ),
+    path(
+        "departements/<str:pk>/services-publics/association/",
+        views.get_service_public_for_association_by_departement,
+        name="get_service_public_for_association_by_departement",
+    ),
 ]

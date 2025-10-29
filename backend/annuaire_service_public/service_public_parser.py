@@ -63,6 +63,7 @@ class ServicePublicParser:
     def parse_record(cls, record):
         adresse, latitude, longitude = cls.parse_adresse(record)
         return {
+            "id": record.get("id", ""),
             "nom": record.get("nom", ""),
             "type": cls.parse_type_service(record),
             "adresse": adresse,
