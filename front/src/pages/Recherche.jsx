@@ -16,18 +16,26 @@ export default function Recherche() {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
     const fetchServices = async () => {
         setLoading(true);
         setError("");
         try {
             let data;
             if (profil === "citoyen") {
-                data = await DepartementsService.departementsServicesPublicsCitoyenList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsCitoyenList(
+                        departement
+                    );
             } else if (profil === "professionnel") {
-                data = await DepartementsService.departementsServicesPublicsProfessionnelList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsProfessionnelList(
+                        departement
+                    );
             } else {
-                data = await DepartementsService.departementsServicesPublicsAssociationList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsAssociationList(
+                        departement
+                    );
             }
             setServices(data);
         } catch (err) {
@@ -37,15 +45,12 @@ export default function Recherche() {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchServices();
     }, [profil, departement]);
-
     return (
         <Container className="mt-4">
             <h2>🔍 Recherche de services publics</h2>
-
             <Form className="my-4">
                 <Row className="g-3">
                     <Col md={4}>
@@ -59,7 +64,6 @@ export default function Recherche() {
                             <option value="association">Association</option>
                         </Form.Select>
                     </Col>
-
                     <Col md={4}>
                         <Form.Label>Département</Form.Label>
                         <Form.Control
@@ -69,7 +73,6 @@ export default function Recherche() {
                             onChange={(e) => setDepartement(e.target.value)}
                         />
                     </Col>
-
                     <Col md={4} className="d-flex align-items-end">
                         <Button
                             variant="primary"
@@ -81,21 +84,20 @@ export default function Recherche() {
                     </Col>
                 </Row>
             </Form>
-
             {loading && (
                 <div className="text-center my-4">
                     <Spinner animation="border" variant="primary" />
                 </div>
             )}
-
             {error && <Alert variant="danger">{error}</Alert>}
-
             <Row>
                 {services.map((s, index) => (
                     <Col md={4} key={index} className="mb-4">
                         <Card>
                             <Card.Body>
-                                <Card.Title>{s.nom || "Service public"}</Card.Title>
+                                <Card.Title>
+                                    {s.nom || "Service public"}
+                                </Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">
                                     {s.type || "Type inconnu"}
                                 </Card.Subtitle>
@@ -104,7 +106,8 @@ export default function Recherche() {
                                     {s.adresse || "Non renseignée"} <br />
                                     {s.telephone && (
                                         <>
-                                            <strong>📞</strong> {s.telephone} <br />
+                                            <strong>📞</strong> {s.telephone}{" "}
+                                            <br />
                                         </>
                                     )}
                                     {s.email && (
@@ -121,7 +124,6 @@ export default function Recherche() {
                     </Col>
                 ))}
             </Row>
-
             {!loading && services.length === 0 && (
                 <p className="text-center text-muted mt-4">
                     Aucun service trouvé pour ce profil / département.

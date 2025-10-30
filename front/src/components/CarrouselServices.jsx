@@ -1,4 +1,5 @@
 import { Carousel } from "react-bootstrap";
+import ImageService from "./ImageService";
 
 export default function CarrouselServices({ services = [] }) {
     if (!services || services.length === 0) {
@@ -10,36 +11,42 @@ export default function CarrouselServices({ services = [] }) {
     }
 
     return (
-        <Carousel>
-            {services.map((service) => (
-                <Carousel.Item key={service.id}>
-                    {/* TODO: Image temporaire*/}
-                    <div
-                        style={{
-                            height: "300px",
-                            backgroundColor: "#e9ecef",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <h5 className="text-muted">Image à venir</h5>
-                    </div>
+        <div
+            style={{
+                maxWidth: "700px",
+                margin: "0 auto",
+                borderRadius: "20px",
+            }}
+        >
+            <Carousel>
+                {services.map((service) => (
+                    <Carousel.Item key={service.id}>
+                        <div
+                            style={{
+                                height: "300px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <ImageService service={service} />
+                        </div>
 
-                    <Carousel.Caption
-                        style={{
-                            backgroundColor: "rgba(0,0,0,0.5)",
-                            borderRadius: "8px",
-                            padding: "10px",
-                        }}
-                    >
-                        <h5>{service.nom}</h5>
-                        <p className="mb-1">
-                            <strong>Adresse :</strong> {service.adresse}
-                        </p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-            ))}
-        </Carousel>
+                        <Carousel.Caption
+                            style={{
+                                backgroundColor: "rgba(0,0,0,0.5)",
+                                borderRadius: "8px",
+                                padding: "10px",
+                            }}
+                        >
+                            <h5>{service.nom}</h5>
+                            <p className="mb-1">
+                                <strong>Adresse :</strong> {service.adresse}
+                            </p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                ))}
+            </Carousel>
+        </div>
     );
 }
