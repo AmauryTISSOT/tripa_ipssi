@@ -220,7 +220,7 @@ def delete_service_compilation(request, pk):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    deleted, _ = Compilation.objects.filter(id=pk).delete()
+    deleted, _ = Compilation.objects.filter(service_id=pk).delete()
 
     if deleted == 0:
         return Response(
