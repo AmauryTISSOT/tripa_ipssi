@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import {
     Container,
     Row,
@@ -9,13 +10,16 @@ import {
     Spinner,
     Alert,
 } from "react-bootstrap";
-import { DepartementsService } from "../api/services/DepartementsService"; 
+import { DepartementsService } from "../api/services/DepartementsService";
 export default function Recherche() {
     const [profil, setProfil] = useState("citoyen");
     const [departement, setDepartement] = useState("75"); // Exemple : Paris
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
+
     const fetchServices = async () => {
         setLoading(true);
         setError("");
@@ -48,6 +52,7 @@ export default function Recherche() {
     useEffect(() => {
         fetchServices();
     }, [profil, departement]);
+
     return (
         <Container className="mt-4">
             <h2>🔍 Recherche de services publics</h2>
@@ -116,7 +121,11 @@ export default function Recherche() {
                                         </>
                                     )}
                                 </Card.Text>
-                                <Button variant="outline-primary" size="sm">
+                                <Button
+                                    variant="outline-primary"
+                                    size="sm"
+                                    onClick={() => navigate(`/service/${s.id}`)}
+                                >
                                     Voir plus
                                 </Button>
                             </Card.Body>
