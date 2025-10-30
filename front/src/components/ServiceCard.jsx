@@ -8,6 +8,7 @@ export default function ServiceCard({ service, onRemove }) {
     const navigate = useNavigate();
     const location = useLocation();
     const isOnCompilationPage = location.pathname === "/compilation";
+    const isOnRecherchePage = location.pathname === "/recherche";
 
     const addToCompilation = async (id) => {
         try {
@@ -27,7 +28,10 @@ export default function ServiceCard({ service, onRemove }) {
     };
 
     return (
-        <Card>
+        <Card
+            className="h-100 d-flex flex-column"
+            style={{ width: "100%", maxWidth: "450px" }}
+        >
             <Card.Body>
                 <Card.Title>{service.nom || "Service public"}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
@@ -48,7 +52,7 @@ export default function ServiceCard({ service, onRemove }) {
                     )}
                 </Card.Text>
                 <Row>
-                    <Col sm={8}>
+                    <Col sm={isOnRecherchePage ? 10 : 8}>
                         <Button
                             variant="outline-primary"
                             size="sm"
@@ -70,16 +74,18 @@ export default function ServiceCard({ service, onRemove }) {
                             <IoMdAdd />
                         </Button>
                     </Col>
-                    <Col sm={2}>
-                        <Button
-                            variant="danger"
-                            size="sm"
-                            className="d-flex justify-content-center align-items-center h-100"
-                            onClick={() => removeCompilation(service.id)}
-                        >
-                            <IoTrashOutline />
-                        </Button>
-                    </Col>
+                    {!isOnRecherchePage && (
+                        <Col sm={2}>
+                            <Button
+                                variant="danger"
+                                size="sm"
+                                className="d-flex justify-content-center align-items-center h-100"
+                                onClick={() => removeCompilation(service.id)}
+                            >
+                                <IoTrashOutline />
+                            </Button>
+                        </Col>
+                    )}
                 </Row>
             </Card.Body>
         </Card>

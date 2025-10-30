@@ -7,9 +7,9 @@ export default function ServicesGrid({ services = [], onRemove }) {
     }
 
     return (
-        <Row md={2}>
+        <Row xs={1} sm={2} md={3} className="g-4 justify-content-center">
             {services.map((s, index) => (
-                <Col md={4} key={index} className="mb-4">
+                <Col key={index} className="d-flex justify-content-center">
                     <ServiceCard service={s} onRemove={onRemove} />
                 </Col>
             ))}
