@@ -19,6 +19,9 @@ export default function RootLayout() {
                             <Nav.Link as={Link} to="/recherche">
                                 Recherche
                             </Nav.Link>
+                            <Nav.Link as={Link} to="/compilation">
+                                Compilation
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

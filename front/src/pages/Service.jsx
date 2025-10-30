@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
 import { ServicesPublicsService } from "../api/services/ServicesPublicsService";
+import { CompilationService } from "../api/services/CompilationService";
 import ImageService from "../components/ImageService";
 import MapService from "../components/MapService";
+import { IoMdAdd } from "react-icons/io";
 
 export default function Service() {
     const { id } = useParams();
@@ -74,6 +76,16 @@ export default function Service() {
         return `${adresse} - ${ville}`;
     }
 
+    const addToCompilation = async (id) => {
+        try {
+            await CompilationService.compilationCreate(id);
+        } catch (error) {
+            console.error(
+                "Une erreur s'est produite lors de l'ajout d'une compilation",
+                error
+            );
+        }
+    };
     return (
         <Container className="mt-5">
             <Row>
@@ -148,6 +160,19 @@ export default function Service() {
                             Voir sur Service Public
                         </a>
                     </p>
+                    <Row>
+                        <Col sm={10}></Col>
+                        <Col sm={2}>
+                            <Button
+                                variant="success"
+                                size="lg"
+                                className="d-flex justify-content-center align-items-center h-100"
+                                onClick={() => addToCompilation(service.id)}
+                            >
+                                <IoMdAdd />
+                            </Button>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
             <Row className="mt-4 d-flex justify-content-center align-items-center align-self-center">
