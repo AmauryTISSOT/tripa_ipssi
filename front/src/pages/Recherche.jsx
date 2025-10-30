@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState, useCallback } from "react";
 import {
     Container,
     Row,
     Col,
-    Card,
     Form,
     Button,
     Spinner,
     Alert,
 } from "react-bootstrap";
 import { DepartementsService } from "../api/services/DepartementsService";
+import ServicesGrid from "../components/ServicesGrid";
+
 export default function Recherche() {
     const [profil, setProfil] = useState("citoyen");
     const [departement, setDepartement] = useState("75"); // Exemple : Paris
@@ -18,9 +18,7 @@ export default function Recherche() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const navigate = useNavigate();
-
-    const fetchServices = async () => {
+    const fetchServices = useCallback(async () => {
         setLoading(true);
         setError("");
         try {
@@ -48,10 +46,11 @@ export default function Recherche() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [profil, departement]);
+
     useEffect(() => {
         fetchServices();
-    }, [profil, departement]);
+    }, [fetchServices]);
 
     return (
         <Container className="mt-4">
@@ -95,44 +94,7 @@ export default function Recherche() {
                 </div>
             )}
             {error && <Alert variant="danger">{error}</Alert>}
-            <Row>
-                {services.map((s, index) => (
-                    <Col md={4} key={index} className="mb-4">
-                        <Card>
-                            <Card.Body>
-                                <Card.Title>
-                                    {s.nom || "Service public"}
-                                </Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">
-                                    {s.type || "Type inconnu"}
-                                </Card.Subtitle>
-                                <Card.Text>
-                                    <strong>Adresse :</strong>{" "}
-                                    {s.adresse || "Non renseignée"} <br />
-                                    {s.telephone && (
-                                        <>
-                                            <strong>📞</strong> {s.telephone}{" "}
-                                            <br />
-                                        </>
-                                    )}
-                                    {s.email && (
-                                        <>
-                                            <strong>📧</strong> {s.email} <br />
-                                        </>
-                                    )}
-                                </Card.Text>
-                                <Button
-                                    variant="outline-primary"
-                                    size="sm"
-                                    onClick={() => navigate(`/service/${s.id}`)}
-                                >
-                                    Voir plus
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+            <ServicesGrid services={services} />
             {!loading && services.length === 0 && (
                 <p className="text-center text-muted mt-4">
                     Aucun service trouvé pour ce profil / département.
