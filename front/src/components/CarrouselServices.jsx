@@ -1,7 +1,10 @@
 import { Carousel } from "react-bootstrap";
 import ImageService from "./ImageService";
+import { useNavigate } from "react-router";
 
 export default function CarrouselServices({ services = [] }) {
+    const navigate = useNavigate();
+
     if (!services || services.length === 0) {
         return (
             <p className="text-center text-muted">
@@ -20,7 +23,11 @@ export default function CarrouselServices({ services = [] }) {
         >
             <Carousel>
                 {services.map((service) => (
-                    <Carousel.Item key={service.id}>
+                    <Carousel.Item
+                        key={service.id}
+                        onClick={() => navigate(`/service/${service.id}`)}
+                        style={{ cursor: "pointer" }}
+                    >
                         <div
                             style={{
                                 height: "300px",
