@@ -9,8 +9,7 @@ import {
     Spinner,
     Alert,
 } from "react-bootstrap";
-import { DepartementsService } from "../services/DepartementsService"; // adapte le chemin selon ton arborescence
-
+import { DepartementsService } from "../api/services/DepartementsService"; 
 export default function Recherche() {
     const [profil, setProfil] = useState("citoyen");
     const [departement, setDepartement] = useState("75"); // Exemple : Paris
