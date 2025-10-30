@@ -11,19 +11,19 @@ export default function Compilation() {
         const fetchCompilation = async () => {
             try {
                 const data = await CompilationService.compilationList();
-                console.log("data:", data);
                 setCompilationData(data);
             } catch (error) {
-                console.error(
-                    "Erreur lors du chargement des compilations",
-                    error
-                );
+                console.error("Erreur chargement compilations", error);
             } finally {
                 setLoading(false);
             }
         };
         fetchCompilation();
     }, []);
+
+    const handleRemove = (id) => {
+        setCompilationData((prev) => prev.filter((s) => s.id !== id));
+    };
 
     if (loading) {
         return (
@@ -36,7 +36,7 @@ export default function Compilation() {
 
     return (
         <Container className="mt-4">
-            <ServicesGrid services={compilationData} />
+            <ServicesGrid services={compilationData} onRemove={handleRemove} />
         </Container>
     );
 }

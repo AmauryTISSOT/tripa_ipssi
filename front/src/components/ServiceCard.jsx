@@ -4,31 +4,25 @@ import { IoMdAdd } from "react-icons/io";
 import { IoTrashOutline } from "react-icons/io5";
 import { CompilationService } from "../api/services/CompilationService";
 
-export default function ServiceCard({ service }) {
+export default function ServiceCard({ service, onRemove }) {
     const navigate = useNavigate();
     const location = useLocation();
-
     const isOnCompilationPage = location.pathname === "/compilation";
 
     const addToCompilation = async (id) => {
         try {
             await CompilationService.compilationCreate(id);
         } catch (error) {
-            console.error(
-                "Une erreur s'est produite lors de l'ajout d'une compilation",
-                error
-            );
+            console.error("Erreur ajout compilation", error);
         }
     };
 
     const removeCompilation = async (id) => {
         try {
             await CompilationService.compilationDeleteDelete(id);
+            if (onRemove) onRemove(id);
         } catch (error) {
-            console.error(
-                "Une erreur s'est produite lors de l'ajout d'une compilation",
-                error
-            );
+            console.error("Erreur suppression compilation", error);
         }
     };
 
