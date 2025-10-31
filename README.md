@@ -61,3 +61,7 @@ npm run dev
 ```
 
 L'application sera alors accessible sur le port : http://localhost:5173/
+
+## Présentation du projet
+
+La vidéo de présentation de notre projet est disponible via le lien [suivant](https://teams.microsoft.com/l/meetingrecap?driveId=b%21G3hdvs9-pEiVjQ-WTZVi9mSmTceJaypDqQkDcXD1cQr2KQsNRe1dTbEXriI7iTfs&driveItemId=01LWCFKYWWOSE4XPJSKVBIYT4KKXFGS6RY&sitePath=https%3A%2F%2Ftestipformation-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fa_tissot_ecole-ipssi_net%2FEdZ0icu9MlVCjE-KVcppejgBih2NjKuRXjgo3CVMHVDl2g&fileUrl=https%3A%2F%2Ftestipformation-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fa_tissot_ecole-ipssi_net%2FEdZ0icu9MlVCjE-KVcppejgBih2NjKuRXjgo3CVMHVDl2g&threadId=19%3A7798663a-bd21-428e-acec-1af8b8f6831e_86e4d92b-0285-4ea1-885d-9fe03bfb7b85%40unq.gbl.spaces&callId=b703d4e1-816b-4aa0-a39d-654fa9296610&threadType=OneOnOneChat&meetingType=Unknown&subType=RecapSharingLink_RecapChiclet).
