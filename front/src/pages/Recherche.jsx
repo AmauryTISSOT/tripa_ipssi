@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { DepartementsService } from "../api/services/DepartementsService";
 import { DepartementService } from "../api/services/DepartementService";
+import ServicesGrid from "../components/ServicesGrid";
 
 export default function Recherche() {
     const [profil, setProfil] = useState("citoyen");
@@ -20,7 +21,7 @@ export default function Recherche() {
     const [rayon, setRayon] = useState(10);
     const [pmr, setPmr] = useState(false);
     const [enLigne, setEnLigne] = useState(false);
-    const [horaires, setHoraires] = useState("");   
+    const [horaires, setHoraires] = useState("");
     const [departements, setDepartements] = useState([]);
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ export default function Recherche() {
             console.error(err);
         }
     };
-        // Liste des types d'administration
+    // Liste des types d'administration
     const typesAdministration = [
         { value: "", label: "Tous les types" },
         { value: "mairie", label: "Mairie" },
@@ -57,21 +58,33 @@ export default function Recherche() {
         try {
             let data;
             if (profil === "citoyen") {
-                data = await DepartementsService.departementsServicesPublicsCitoyenList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsCitoyenList(
+                        departement
+                    );
             } else if (profil === "professionnel") {
-                data = await DepartementsService.departementsServicesPublicsProfessionnelList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsProfessionnelList(
+                        departement
+                    );
             } else {
-                data = await DepartementsService.departementsServicesPublicsAssociationList(departement);
+                data =
+                    await DepartementsService.departementsServicesPublicsAssociationList(
+                        departement
+                    );
             }
-            console.log("✅ Données reçues :", data); 
+            console.log("✅ Données reçues :", data);
 
             // 🔸 Filtrage local simulé selon les critères
             const filtered = data.filter((s) => {
-                const matchType = typeAdmin ? s.type?.toLowerCase()=== typeAdmin.toLowerCase() : true;
-                const matchCommune = commune ? s.commune?.toLowerCase().includes(commune.toLowerCase()) : true;
+                const matchType = typeAdmin
+                    ? s.type?.toLowerCase() === typeAdmin.toLowerCase()
+                    : true;
+                const matchCommune = commune
+                    ? s.commune?.toLowerCase().includes(commune.toLowerCase())
+                    : true;
                 const matchPmr = pmr ? s.accessibilite_pmr === true : true;
                 const matchEnLigne = enLigne ? s.en_ligne === true : true;
-
 
                 return matchType && matchCommune && matchPmr && matchEnLigne;
             });
@@ -160,7 +173,6 @@ export default function Recherche() {
                     </Col>
                     /*/}
 
-
                     <Col md={3} className="d-flex align-items-center">
                         <Form.Check
                             type="checkbox"
@@ -201,52 +213,7 @@ export default function Recherche() {
             {error && <Alert variant="danger">{error}</Alert>}
 
             {/* === LISTE DES SERVICES === */}
-            <Row>
-                {services.map((s, index) => (
-                    <Col md={4} key={index} className="mb-4">
-                        <Card>
-                            <Card.Body>
-                                <Card.Title>{s.nom || "Service public"}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">
-                                    {s.type || "Type inconnu"}
-                                </Card.Subtitle>
-                                <Card.Text>
-                                    <strong>Adresse :</strong> {s.adresse || "Non renseignée"} <br />
-                                    {s.telephone && (
-                                        <>
-                                            📞 {s.telephone} <br />
-                                        </>
-                                    )}
-                                    {s.email && (
-                                        <>
-                                            📧 {s.email} <br />
-                                        </>
-                                    )}
-                                    {s.site_web && (
-                                        <>
-                                            🌐{" "}
-                                            <a href={s.site_web} target="_blank" rel="noreferrer">
-                                                Site web
-                                            </a>
-                                            <br />
-                                        </>
-                                    )}
-                                    {s.accessibilite_pmr && (
-                                        <span className="badge bg-success mt-2">
-                                            ♿ Accessible PMR
-                                        </span>
-                                    )}
-                                    {s.en_ligne && (
-                                        <span className="badge bg-info text-dark ms-2 mt-2">
-                                            🌐 Service en ligne
-                                        </span>
-                                    )}
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+            <ServicesGrid services={services} />
 
             {!loading && services.length === 0 && (
                 <p className="text-center text-muted mt-4">
